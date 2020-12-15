@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table, Date
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship,scoped_session
 import os
 
 # The absolute path to the dotabase Python package
@@ -254,5 +254,6 @@ class LoadingScreen(Base):
 def dotabase_session():
 	engine = create_engine('sqlite:///' + dotabase_db)
 	Base.metadata.create_all(engine)
-	Session = sessionmaker(bind=engine)
+	Session_ = sessionmaker(bind=engine)
+	Session = scoped_session(Session_)
 	return Session()
